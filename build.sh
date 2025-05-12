@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CRS_VERSION="4.9.0"
+CRS_VERSION="4.14.0"
 
 if [ ! -d vol/coreruleset ] ; then
     cd vol

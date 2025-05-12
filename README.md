@@ -1,6 +1,6 @@
 # sdsecproxy
 
-A very simple nginx proxy with modsecurity and corerulesets
+A very simple nginx proxy with modsecurity and corerulesets (v4.14.0)
 
 Just look at the start_proxy.sh and change the 2 lines
 
