@@ -21,4 +21,4 @@ fi
 
 
 # This script is used to build the project using the provided Dockerfile.
-(cd docker && docker build -t cssdata/sdsecproxy:latest .)
+(cd docker && docker build -t cssdata/sdsecproxy:20260716 .)

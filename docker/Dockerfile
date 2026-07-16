@@ -1,5 +1,5 @@
 # Stage 1: Build ModSecurity
-FROM debian:bullseye as build
+FROM debian:bullseye AS build
 
 # Install dependencies for building ModSecurity
 RUN apt-get update && apt-get install -y \
@@ -39,6 +39,16 @@ RUN mkdir -p /var/cache/nginx/client_temp && \
     mkdir -p /var/cache/nginx/uwsgi_temp && \
     mkdir -p /var/cache/nginx/scgi_temp && \
     chown -R nobody:nogroup /var/cache/nginx
+
+# Point the log paths nginx.conf uses at the container's stdout/stderr, so the
+# logs reach `docker logs` and the json-file driver rotates them. Without these
+# the same nginx.conf writes real files inside the container instead: invisible
+# to `docker logs` and discarded on every recreate. The image running in
+# production has carried these symlinks since 2025; they were missing here,
+# which is why a rebuild looked like it had broken logging.
+RUN mkdir -p /var/log/nginx && \
+    ln -sf /dev/stdout /var/log/nginx/access.log && \
+    ln -sf /dev/stderr /var/log/nginx/error.log
 
 # # Stage 2: Final Image with Debian and NGINX
 # FROM debian:bullseye
